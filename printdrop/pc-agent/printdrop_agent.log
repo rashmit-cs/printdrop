@@ -1,0 +1,252 @@
+2026-06-08 18:11:42,188 [INFO] ==================================================
+2026-06-08 18:11:42,189 [INFO] PrintDrop PC Agent started
+2026-06-08 18:11:42,189 [INFO] Server : http://localhost:4000
+2026-06-08 18:11:42,189 [INFO] Shop ID: YOUR_SHOP_ID_HERE
+2026-06-08 18:11:42,189 [INFO] Polling every 5s
+2026-06-08 18:11:42,189 [INFO] ==================================================
+2026-06-08 18:11:51,279 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:00,327 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:09,423 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:18,477 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:27,582 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:36,663 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:45,734 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:12:54,780 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:03,849 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:12,916 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:21,995 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:31,029 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:40,101 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:49,200 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:13:58,273 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:07,359 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:16,450 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:25,511 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:34,556 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:43,635 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:14:52,696 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:01,765 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:10,844 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:19,886 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:28,988 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:38,068 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:47,128 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:15:56,175 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:05,231 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:14,310 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:23,390 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:32,468 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:41,545 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:50,650 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:16:59,708 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:08,795 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:17,860 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:26,949 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:36,016 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:45,096 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:17:54,178 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:03,225 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:12,279 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:21,360 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:30,405 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:39,469 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:48,545 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:18:57,645 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:06,732 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:15,800 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:24,873 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:33,969 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:43,042 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:19:52,119 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:01,205 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:10,268 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:19,352 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:28,474 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:37,499 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:46,561 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:20:55,585 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:21:00,607 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:09,696 [WARNING] Server unreachable. Will retry...
+2026-06-08 18:21:14,708 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:19,737 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:24,746 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:29,761 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:34,780 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:39,808 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:44,825 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:49,841 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:54,857 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:21:59,869 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:04,880 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:09,902 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:14,912 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:19,919 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:24,939 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:29,949 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:34,959 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:39,968 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:44,989 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:49,998 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:22:55,023 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:00,043 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:05,065 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:10,087 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:15,121 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:20,139 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:25,153 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:30,170 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:35,186 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:40,194 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:45,210 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:50,220 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:23:55,232 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:00,254 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:05,260 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:10,270 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:15,277 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:20,288 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:25,294 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:30,301 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:35,315 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:40,326 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:45,333 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:50,339 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:24:55,357 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:00,369 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:05,382 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:10,390 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:15,414 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:20,438 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:25,459 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:30,472 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:35,481 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:40,495 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:45,515 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:50,533 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:25:55,540 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:00,548 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:05,560 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:10,570 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:15,581 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:20,590 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:25,603 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:30,610 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:35,633 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:40,644 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:45,654 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:50,663 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:26:55,690 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:00,701 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:05,709 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:10,722 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:15,730 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:20,749 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:25,762 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:30,774 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:35,790 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:40,797 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:45,821 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:50,831 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:27:55,839 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:00,848 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:05,862 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:10,892 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:15,921 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:20,936 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:25,949 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:30,955 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:35,960 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:40,972 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:45,996 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:51,012 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:28:56,020 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:01,026 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:06,038 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:11,055 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:16,061 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:21,070 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:26,077 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:31,084 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:36,090 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:41,098 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:46,105 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:51,143 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:29:56,162 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:01,174 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:06,180 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:11,185 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:16,194 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:21,199 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:26,204 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:31,209 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:36,227 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:41,235 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:46,242 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:51,252 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:30:56,262 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:01,268 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:06,289 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:11,302 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:16,312 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:21,347 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:26,356 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:31,366 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:36,373 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:41,397 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:46,413 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:51,445 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:31:56,458 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:01,467 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:06,475 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:11,486 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:16,513 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:21,533 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:26,559 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:31,577 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:36,588 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:41,593 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:46,603 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:51,612 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:32:56,627 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:01,654 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:06,663 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:11,689 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:16,699 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:21,706 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:26,715 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:31,728 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:36,752 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:41,761 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:46,784 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:51,798 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:33:56,822 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:01,833 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:06,848 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:11,860 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:16,873 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:21,883 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:26,889 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:31,914 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:36,928 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:41,936 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:46,949 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:51,961 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:34:56,973 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:35:01,980 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:35:07,011 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:35:12,026 [WARNING] Poll returned 401: {"error":"Wrong secret"}
+2026-06-08 18:36:36,961 [INFO] ==================================================
+2026-06-08 18:36:36,961 [INFO] PrintDrop PC Agent started
+2026-06-08 18:36:36,962 [INFO] Server : http://localhost:4000
+2026-06-08 18:36:36,962 [INFO] Shop ID: 4bef3bc1-a8f1-438c-97e7-35419e8084d8
+2026-06-08 18:36:36,962 [INFO] Polling every 5s
+2026-06-08 18:36:36,962 [INFO] ==================================================
+2026-06-08 18:37:52,146 [INFO] Got 1 job(s)
+2026-06-08 18:37:52,147 [INFO] Downloading ed743ebc-fba0-4ec6-84af-e5330fc38b7f_echallan.parivahan.gov.in_report_print-page_challan_no=WuO8DeDz72Bz6kcxuZqprM4exbelW96i972ZcOxJtO8%3D.pdf from http://localhost:4000/uploads/caa095a3-bead-4817-aa1a-5f61f1a9a130.pdf
+2026-06-08 18:37:52,174 [INFO] Saved to C:\Users\maheshwari\AppData\Local\Temp\printdrop_jobs\ed743ebc-fba0-4ec6-84af-e5330fc38b7f_echallan.parivahan.gov.in_report_print-page_challan_no=WuO8DeDz72Bz6kcxuZqprM4exbelW96i972ZcOxJtO8%3D.pdf
+2026-06-08 18:37:53,210 [INFO] Printing ed743ebc-fba0-4ec6-84af-e5330fc38b7f_echallan.parivahan.gov.in_report_print-page_challan_no=WuO8DeDz72Bz6kcxuZqprM4exbelW96i972ZcOxJtO8%3D.pdf | type=BW | copies=1 | printer=default
+2026-06-08 18:37:53,681 [ERROR] Windows print error: (31, 'ShellExecute', 'A device attached to the system is not functioning.')
+2026-06-08 18:37:54,003 [WARNING] Order ed743ebc-fba0-4ec6-84af-e5330fc38b7f marked FAILED
+2026-06-08 18:37:54,005 [INFO] Deleted local temp file: ed743ebc-fba0-4ec6-84af-e5330fc38b7f_echallan.parivahan.gov.in_report_print-page_challan_no=WuO8DeDz72Bz6kcxuZqprM4exbelW96i972ZcOxJtO8%3D.pdf
+2026-06-08 22:50:46,791 [WARNING] Server unreachable. Will retry...
+2026-06-08 23:07:26,579 [WARNING] Server unreachable. Will retry...

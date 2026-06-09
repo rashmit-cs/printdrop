@@ -1,0 +1,60 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shop {
+  id             String   @id @default(uuid())
+  name           String
+  ownerName      String
+  email          String   @unique
+  passwordHash   String
+  phone          String
+  colorPrice     Float    @default(10)
+  bwPrice        Float    @default(2)
+  colorPrinter   String   @default("default")
+  bwPrinter      String   @default("default")
+  isOpen         Boolean  @default(true)
+  qrGenerated    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  orders         Order[]
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  shopId       String
+  shop         Shop        @relation(fields: [shopId], references: [id])
+  fileName     String
+  fileUrl      String      // local temp path
+  filePath     String      // absolute server path
+  printType    PrintType
+  pages        Int         @default(1)
+  copies       Int         @default(1)
+  amount       Float
+  status       OrderStatus @default(PENDING_PAYMENT)
+  razorpayOrderId  String?
+  razorpayPaymentId String?
+  customerPhone String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  printedAt    DateTime?
+  deletedAt    DateTime?   // file deleted timestamp
+}
+
+enum PrintType {
+  COLOR
+  BW
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  PRINTING
+  PRINTED
+  FAILED
+}
