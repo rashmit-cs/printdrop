@@ -10,7 +10,6 @@ import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import orderRoutes from './routes/order.js';
-import paymentRoutes from './routes/payment.js';
 import agentRoutes from './routes/agent.js';
 
 dotenv.config();
@@ -28,7 +27,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/shop', shopRoutes);
 app.use('/api/order', orderRoutes);
-app.use('/api/payment', paymentRoutes);
 app.use('/api/agent', agentRoutes);
 
 app.get('/', (req, res) => res.json({ status: 'PrintDrop API running 🚀' }));

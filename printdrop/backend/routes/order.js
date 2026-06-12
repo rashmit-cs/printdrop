@@ -4,36 +4,29 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
+import { authMiddleware } from '../middleware/auth.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Multer config - store locally, rename with uuid
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
-  }
+  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
+  filename: (req, file, cb) => cb(null, `${uuidv4()}${path.extname(file.originalname)}`)
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
-    const ext = path.extname(file.originalname).toLowerCase();
-    if (allowed.includes(ext)) cb(null, true);
-    else cb(new Error('Only PDF, DOC, DOCX, JPG, PNG allowed'));
+    cb(null, allowed.includes(path.extname(file.originalname).toLowerCase()));
   }
 });
 
-// POST /api/order/upload/:shopId - customer uploads file
+// POST /api/order/upload/:shopId
 router.post('/upload/:shopId', upload.single('file'), async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded (check file type)' });
 
   const { shopId } = req.params;
   const { printType, copies, customerPhone } = req.body;
@@ -42,20 +35,16 @@ router.post('/upload/:shopId', upload.single('file'), async (req, res) => {
   if (!shop) return res.status(404).json({ error: 'Shop not found' });
   if (!shop.isOpen) return res.status(400).json({ error: 'Shop is currently closed' });
 
-  // Calculate amount (pages will be counted by PC agent, estimate 1 for now)
   const pricePerPage = printType === 'COLOR' ? shop.colorPrice : shop.bwPrice;
   const numCopies = parseInt(copies) || 1;
-  const estimatedAmount = pricePerPage * numCopies; // pages updated after PC agent counts
-
-  const fileUrl = `/uploads/${req.file.filename}`;
-  const filePath = req.file.path;
+  const estimatedAmount = pricePerPage * numCopies;
 
   const order = await prisma.order.create({
     data: {
       shopId,
       fileName: req.file.originalname,
-      fileUrl,
-      filePath,
+      fileUrl: `/uploads/${req.file.filename}`,
+      filePath: req.file.path,
       printType: printType === 'COLOR' ? 'COLOR' : 'BW',
       copies: numCopies,
       amount: estimatedAmount,
@@ -70,11 +59,12 @@ router.post('/upload/:shopId', upload.single('file'), async (req, res) => {
     fileName: order.fileName,
     printType: order.printType,
     copies: order.copies,
-    shopName: shop.name
+    shopName: shop.name,
+    shopUpiId: shop.upiId || null
   });
 });
 
-// GET /api/order/:id/status - poll order status (customer)
+// GET /api/order/:id/status
 router.get('/:id/status', async (req, res) => {
   const order = await prisma.order.findUnique({
     where: { id: req.params.id },
@@ -84,8 +74,22 @@ router.get('/:id/status', async (req, res) => {
   res.json(order);
 });
 
-// GET /api/order/shop/list - shopkeeper sees all orders (auth)
-import { authMiddleware } from '../middleware/auth.js';
+// POST /api/order/:id/claim-paid — customer clicks "I've Paid"
+router.post('/:id/claim-paid', async (req, res) => {
+  const order = await prisma.order.findUnique({ where: { id: req.params.id } });
+  if (!order) return res.status(404).json({ error: 'Order not found' });
+  if (order.status !== 'PENDING_PAYMENT') return res.status(400).json({ error: 'Order not awaiting payment' });
+
+  await prisma.order.update({
+    where: { id: req.params.id },
+    data: { status: 'AWAITING_CONFIRMATION', customerClaimedPaidAt: new Date() }
+  });
+  res.json({ success: true });
+});
+
+// ── SHOPKEEPER ROUTES (auth) ──────────────────────────────────────────────
+
+// GET /api/order/shop/list
 router.get('/shop/list', authMiddleware, async (req, res) => {
   const orders = await prisma.order.findMany({
     where: { shopId: req.shopId },
@@ -97,6 +101,41 @@ router.get('/shop/list', authMiddleware, async (req, res) => {
     }
   });
   res.json(orders);
+});
+
+// GET /api/order/shop/pending — orders awaiting payment confirmation
+router.get('/shop/pending', authMiddleware, async (req, res) => {
+  const orders = await prisma.order.findMany({
+    where: { shopId: req.shopId, status: 'AWAITING_CONFIRMATION' },
+    orderBy: { customerClaimedPaidAt: 'asc' },
+    select: {
+      id: true, fileName: true, printType: true, copies: true,
+      amount: true, customerPhone: true, customerClaimedPaidAt: true
+    }
+  });
+  res.json(orders);
+});
+
+// POST /api/order/:id/confirm — shopkeeper confirms payment received
+router.post('/:id/confirm', authMiddleware, async (req, res) => {
+  const order = await prisma.order.findFirst({ where: { id: req.params.id, shopId: req.shopId } });
+  if (!order) return res.status(404).json({ error: 'Order not found' });
+  if (order.status !== 'AWAITING_CONFIRMATION') return res.status(400).json({ error: 'Order not awaiting confirmation' });
+
+  await prisma.order.update({
+    where: { id: req.params.id },
+    data: { status: 'PAID', confirmedAt: new Date() }
+  });
+  res.json({ success: true });
+});
+
+// POST /api/order/:id/reject — shopkeeper says payment NOT received
+router.post('/:id/reject', authMiddleware, async (req, res) => {
+  const order = await prisma.order.findFirst({ where: { id: req.params.id, shopId: req.shopId } });
+  if (!order) return res.status(404).json({ error: 'Order not found' });
+
+  await prisma.order.update({ where: { id: req.params.id }, data: { status: 'REJECTED' } });
+  res.json({ success: true });
 });
 
 export default router;

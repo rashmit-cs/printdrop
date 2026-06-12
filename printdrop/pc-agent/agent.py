@@ -1,223 +1,178 @@
 """
-PrintDrop PC Agent
-==================
-Runs on shopkeeper's Windows PC.
-Polls server every 5 sec for PAID jobs → downloads file → prints → marks done.
+PrintDrop PC Agent v2
+=====================
+- Auto-discovers all printers on this PC, sends list to server
+- Polls every 5s for PAID jobs
+- Server tells agent which printer to use per job (based on shopkeeper's assignment)
+- Downloads file, prints, marks done, deletes temp file
 
-Install deps: pip install requests schedule pywin32
+Install: pip install requests schedule pywin32
 Run: python agent.py
-Build exe: pyinstaller --onefile --noconsole agent.py
 """
 
-import os
-import sys
-import time
-import requests
-import schedule
-import tempfile
-import subprocess
-import platform
-import logging
+import os, sys, time, requests, schedule, tempfile, subprocess, platform, logging
 from pathlib import Path
 
-# ─── CONFIG ──────────────────────────────────────────────────────────────────
-# Shopkeeper fills these in (or we build a small GUI config screen)
-SERVER_URL = "http://localhost:4000"
-SHOP_ID = "4bef3bc1-a8f1-438c-97e7-35419e8084d8"
-AGENT_SECRET = "printdropsecret456"
+SERVER_URL   = os.environ.get("PRINTDROP_SERVER", "http://localhost:4000")
+SHOP_ID      = os.environ.get("PRINTDROP_SHOP_ID", "YOUR_SHOP_ID_HERE")
+AGENT_SECRET = os.environ.get("PRINTDROP_SECRET", "YOUR_AGENT_SECRET_HERE")
 
+POLL_INTERVAL = 5
+PRINTER_SYNC_INTERVAL = 60  # re-scan printers every 60s
 
-# Printer names (must match exact Windows printer name)
-# Leave "default" to use system default printer
-COLOR_PRINTER = "default"
-BW_PRINTER = "default"
-
-POLL_INTERVAL_SECONDS = 5
 DOWNLOAD_DIR = Path(tempfile.gettempdir()) / "printdrop_jobs"
 DOWNLOAD_DIR.mkdir(exist_ok=True)
 
-# ─── LOGGING ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.FileHandler("printdrop_agent.log"),
-        logging.StreamHandler(sys.stdout)
-    ]
+    handlers=[logging.FileHandler("printdrop_agent.log"), logging.StreamHandler(sys.stdout)]
 )
 log = logging.getLogger("PrintDropAgent")
 
 HEADERS = {"Authorization": f"Bearer {AGENT_SECRET}:{SHOP_ID}"}
 
-# ─── DOWNLOAD FILE ────────────────────────────────────────────────────────────
-def download_file(file_url: str, filename: str) -> Path:
-    url = f"{SERVER_URL}{file_url}"
-    local_path = DOWNLOAD_DIR / filename
-    log.info(f"Downloading {filename} from {url}")
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    local_path.write_bytes(r.content)
-    log.info(f"Saved to {local_path}")
-    return local_path
-
-# ─── PRINT FILE ───────────────────────────────────────────────────────────────
-def print_file(file_path: Path, print_type: str, copies: int) -> bool:
-    """
-    Windows: uses ShellExecute print verb (works for PDF, DOCX, images).
-    Falls back to lp on Linux/Mac (for dev/testing).
-    """
-    printer = COLOR_PRINTER if print_type == "COLOR" else BW_PRINTER
-    
-    log.info(f"Printing {file_path.name} | type={print_type} | copies={copies} | printer={printer}")
-
+# ─── PRINTER DISCOVERY ────────────────────────────────────────────────────
+def discover_printers():
+    names = []
     if platform.system() == "Windows":
         try:
             import win32print
-            import win32api
-            
-            # Set printer if not default
-            if printer != "default":
-                win32print.SetDefaultPrinter(printer)
+            for p in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL | win32print.PRINTER_ENUM_CONNECTIONS):
+                names.append(p[2])  # pPrinterName
+        except Exception as e:
+            log.error(f"Printer discovery error: {e}")
+    else:
+        try:
+            out = subprocess.run(["lpstat", "-p"], capture_output=True, text=True)
+            for line in out.stdout.splitlines():
+                if line.startswith("printer"):
+                    names.append(line.split()[1])
+        except Exception as e:
+            log.error(f"lpstat error: {e}")
+    return names
 
-            # Print using Windows shell (handles PDF, DOCX, images)
+def sync_printers():
+    printers = discover_printers()
+    log.info(f"Discovered printers: {printers}")
+    if not printers:
+        return
+    try:
+        requests.post(f"{SERVER_URL}/api/agent/register-printers",
+                       json={"printers": printers}, headers=HEADERS, timeout=10)
+        log.info("Printer list synced with server")
+    except Exception as e:
+        log.error(f"Printer sync failed: {e}")
+
+# ─── DOWNLOAD ─────────────────────────────────────────────────────────────
+def download_file(file_url, filename):
+    url = f"{SERVER_URL}{file_url}"
+    local_path = DOWNLOAD_DIR / filename
+    r = requests.get(url, timeout=30)
+    r.raise_for_status()
+    local_path.write_bytes(r.content)
+    return local_path
+
+# ─── PRINT ────────────────────────────────────────────────────────────────
+def print_file(file_path: Path, printer_name: str, copies: int) -> bool:
+    log.info(f"Printing {file_path.name} -> printer='{printer_name}' copies={copies}")
+    if platform.system() == "Windows":
+        try:
+            import win32print, win32api
+            if printer_name and printer_name != "default":
+                win32print.SetDefaultPrinter(printer_name)
             for _ in range(copies):
-                win32api.ShellExecute(
-                    0, "print",
-                    str(file_path),
-                    None, ".", 0
-                )
-                time.sleep(1)  # Small delay between copies
-            
-            log.info(f"Print job sent to {printer}")
+                win32api.ShellExecute(0, "print", str(file_path), None, ".", 0)
+                time.sleep(1)
             return True
-
         except Exception as e:
             log.error(f"Windows print error: {e}")
             return False
-
     else:
-        # Linux/Mac fallback (dev testing)
         try:
             cmd = ["lp", str(file_path)]
-            if printer != "default":
-                cmd += ["-d", printer]
+            if printer_name and printer_name != "default":
+                cmd += ["-d", printer_name]
             if copies > 1:
                 cmd += ["-n", str(copies)]
             subprocess.run(cmd, check=True)
-            log.info("Print job sent via lp")
             return True
         except Exception as e:
-            log.error(f"lp print error: {e}")
+            log.error(f"lp error: {e}")
             return False
 
-# ─── CLEANUP LOCAL FILE ───────────────────────────────────────────────────────
-def delete_local_file(file_path: Path):
-    try:
-        file_path.unlink(missing_ok=True)
-        log.info(f"Deleted local temp file: {file_path.name}")
-    except Exception as e:
-        log.warning(f"Could not delete temp file: {e}")
-
-# ─── MARK ORDER DONE / FAILED ─────────────────────────────────────────────────
-def mark_done(order_id: str, pages: int):
-    try:
-        requests.post(
-            f"{SERVER_URL}/api/agent/done/{order_id}",
-            json={"pages": pages},
-            headers=HEADERS,
-            timeout=10
-        )
-        log.info(f"Order {order_id} marked PRINTED")
-    except Exception as e:
-        log.error(f"Failed to mark done: {e}")
-
-def mark_failed(order_id: str):
-    try:
-        requests.post(
-            f"{SERVER_URL}/api/agent/failed/{order_id}",
-            headers=HEADERS,
-            timeout=10
-        )
-        log.warning(f"Order {order_id} marked FAILED")
-    except Exception as e:
-        log.error(f"Failed to mark failed: {e}")
-
-# ─── COUNT PAGES (estimate) ───────────────────────────────────────────────────
 def count_pages(file_path: Path) -> int:
-    """Best-effort page count. Returns 1 if can't determine."""
     try:
-        ext = file_path.suffix.lower()
-        if ext == ".pdf":
-            # Try to count PDF pages without extra lib
+        if file_path.suffix.lower() == ".pdf":
             content = file_path.read_bytes()
             count = content.count(b'/Type /Page') or content.count(b'/Type/Page')
             return max(count, 1)
-    except:
-        pass
-    return 1  # Default 1 page
+    except: pass
+    return 1
 
-# ─── MAIN POLL LOOP ───────────────────────────────────────────────────────────
+# ─── ORDER STATE ──────────────────────────────────────────────────────────
+def mark_done(order_id, pages):
+    try:
+        requests.post(f"{SERVER_URL}/api/agent/done/{order_id}", json={"pages": pages}, headers=HEADERS, timeout=10)
+        log.info(f"Order {order_id} -> PRINTED")
+    except Exception as e:
+        log.error(f"mark_done failed: {e}")
+
+def mark_failed(order_id):
+    try:
+        requests.post(f"{SERVER_URL}/api/agent/failed/{order_id}", headers=HEADERS, timeout=10)
+        log.warning(f"Order {order_id} -> FAILED")
+    except Exception as e:
+        log.error(f"mark_failed failed: {e}")
+
+# ─── MAIN POLL ────────────────────────────────────────────────────────────
 def poll_jobs():
     try:
-        r = requests.get(
-            f"{SERVER_URL}/api/agent/jobs",
-            headers=HEADERS,
-            timeout=10
-        )
+        r = requests.get(f"{SERVER_URL}/api/agent/jobs", headers=HEADERS, timeout=10)
         if r.status_code != 200:
-            log.warning(f"Poll returned {r.status_code}: {r.text}")
+            log.warning(f"Poll error {r.status_code}: {r.text}")
             return
 
         jobs = r.json()
-        if not jobs:
-            return
-
-        log.info(f"Got {len(jobs)} job(s)")
+        if not jobs: return
+        log.info(f"{len(jobs)} job(s) to print")
 
         for job in jobs:
-            order_id   = job["id"]
-            file_url   = job["fileUrl"]
-            filename   = job["fileName"]
-            print_type = job["printType"]
-            copies     = job.get("copies", 1)
-
+            order_id, file_url, filename = job["id"], job["fileUrl"], job["fileName"]
+            printer_name = job.get("printerName", "default")
+            copies = job.get("copies", 1)
             local_file = None
             try:
                 local_file = download_file(file_url, f"{order_id}_{filename}")
-                pages      = count_pages(local_file)
-
-                # Give file time to finish writing before printing
+                pages = count_pages(local_file)
                 time.sleep(0.5)
-
-                success = print_file(local_file, print_type, copies)
-
-                if success:
+                if print_file(local_file, printer_name, copies):
                     mark_done(order_id, pages)
                 else:
                     mark_failed(order_id)
-
             except Exception as e:
                 log.error(f"Job {order_id} error: {e}")
                 mark_failed(order_id)
             finally:
                 if local_file:
-                    delete_local_file(local_file)
+                    try: local_file.unlink(missing_ok=True)
+                    except: pass
 
     except requests.exceptions.ConnectionError:
-        log.warning("Server unreachable. Will retry...")
+        log.warning("Server unreachable, retrying...")
     except Exception as e:
         log.error(f"Poll error: {e}")
 
-# ─── ENTRY POINT ──────────────────────────────────────────────────────────────
+# ─── ENTRY ────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     log.info("=" * 50)
-    log.info("PrintDrop PC Agent started")
-    log.info(f"Server : {SERVER_URL}")
-    log.info(f"Shop ID: {SHOP_ID}")
-    log.info(f"Polling every {POLL_INTERVAL_SECONDS}s")
+    log.info("PrintDrop PC Agent v2 started")
+    log.info(f"Server: {SERVER_URL} | Shop: {SHOP_ID}")
     log.info("=" * 50)
 
-    schedule.every(POLL_INTERVAL_SECONDS).seconds.do(poll_jobs)
+    sync_printers()  # discover on startup
+    schedule.every(POLL_INTERVAL).seconds.do(poll_jobs)
+    schedule.every(PRINTER_SYNC_INTERVAL).seconds.do(sync_printers)
 
     while True:
         schedule.run_pending()
